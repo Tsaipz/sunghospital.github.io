@@ -47,7 +47,6 @@ const App: React.FC = () => {
     };
 
     setCurrentResult(result);
-    // 即使不符合資格也可以顯示金額 0 或特定訊息，但此處僅保存有金額的紀錄
     if (resultData.subsidy2_0 > 0 || resultData.subsidy3_0 > 0) {
       saveHistory(result);
     }
@@ -167,6 +166,7 @@ const App: React.FC = () => {
           </div>
 
           <div className="space-y-6 pt-8 border-t border-gray-100">
+            {/* 根據治療階段顯示日期下拉選單 */}
             <DatePicker 
               label="首次申請日期" 
               value={form.firstApplicationDate} 
@@ -174,6 +174,17 @@ const App: React.FC = () => {
               minYear={2021}
               maxYear={2026}
             />
+
+            {/* 僅「取卵至形成胚胎植入」與「僅胚胎植入」需要顯示植入日期 */}
+            {(form.stage === TreatmentStage.Full || form.stage === TreatmentStage.EmbryoOnly) && (
+              <DatePicker 
+                label="植入日期" 
+                value={form.transferDate || ''} 
+                onChange={(val) => setForm(f => ({ ...f, transferDate: val }))}
+                minYear={2021}
+                maxYear={2026}
+              />
+            )}
           </div>
 
           <button 
