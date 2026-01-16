@@ -47,7 +47,8 @@ const App: React.FC = () => {
     };
 
     setCurrentResult(result);
-    if (resultData.eligible) {
+    // 即使不符合資格也可以顯示金額 0 或特定訊息，但此處僅保存有金額的紀錄
+    if (resultData.subsidy2_0 > 0 || resultData.subsidy3_0 > 0) {
       saveHistory(result);
     }
     
@@ -212,7 +213,7 @@ const App: React.FC = () => {
                       </thead>
                       <tbody className="divide-y divide-gray-100">
                         {/* 2.0 舊制 */}
-                        <tr className={currentResult.eligible ? "bg-white" : "bg-gray-50 opacity-50"}>
+                        <tr className="bg-white">
                           <td className="px-6 py-8">
                             <p className="font-black text-gray-800">補助 2.0</p>
                             <p className="text-xs text-gray-400">(舊制)</p>
@@ -262,21 +263,17 @@ const App: React.FC = () => {
                   </div>
 
                   {/* 推薦醒目顯示區 */}
-                  {currentResult.eligible && (
-                    <div className="mt-10 p-8 rounded-3xl bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 shadow-inner text-center animate-pulse">
-                        <div className="flex justify-center mb-2">
-                             <span className="text-3xl">✨</span>
-                        </div>
-                        <p className="text-amber-800 font-bold text-lg mb-2">您可申請補助金額最高為：</p>
-                        <p className="text-5xl font-black text-orange-600 tracking-tighter">
-                            <span className="text-2xl mr-1">NT$</span>
-                            {Math.max(currentResult.subsidy2_0, currentResult.subsidy3_0).toLocaleString()}
-                        </p>
-                        <p className="text-xs text-amber-600 mt-4 font-bold">※ 實際金額依主管機關核定為準</p>
-                    </div>
-                  )}
-
-                 
+                  <div className="mt-10 p-8 rounded-3xl bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 shadow-inner text-center animate-pulse">
+                      <div className="flex justify-center mb-2">
+                            <span className="text-3xl">✨</span>
+                      </div>
+                      <p className="text-amber-800 font-bold text-lg mb-2">您可申請補助金額最高為：</p>
+                      <p className="text-5xl font-black text-orange-600 tracking-tighter">
+                          <span className="text-2xl mr-1">NT$</span>
+                          {Math.max(currentResult.subsidy2_0, currentResult.subsidy3_0).toLocaleString()}
+                      </p>
+                      <p className="text-xs text-amber-600 mt-4 font-bold">※ 實際金額依主管機關核定為準</p>
+                  </div>
                 </div>
               ) : (
                 <div className="text-center py-20">
