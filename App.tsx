@@ -340,13 +340,11 @@ const App: React.FC = () => {
 
       <footer className="mt-20 py-12 text-center bg-white border-t border-gray-100">
         <div className="max-w-4xl mx-auto px-4">
-          <p className="text-xs font-black text-slate-400 tracking-[0.2em] uppercase mb-4">© 2025 SUN HOSPITAL 聖醫院</p>
+         
           <div className="space-y-1 mb-6">
             <p className="text-sm text-slate-500 font-bold">此試算僅供參考，實際補助金額以主管機關核定為準</p>
           </div>
-          <p className="text-[10px] text-slate-300 leading-relaxed max-w-xl mx-auto font-bold uppercase">
-             專業不孕症治療 • 最新試管嬰兒技術 • 一站式補助申請諮詢
-          </p>
+           <p className="text-xs font-black text-slate-400 tracking-[0.2em] uppercase mb-4">© Copyright All Rights Reserved apple web design</p>
         </div>
       </footer>
 
