@@ -27,7 +27,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          # cache: 'npm'  <-- 我把這行拿掉了，這樣就不會報錯
+          # 這裡原本有 cache: 'npm'，我把它刪掉了
       - name: Install dependencies
         run: npm install
       - name: Build
