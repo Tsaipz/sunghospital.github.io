@@ -1,0 +1,5 @@
+{
+  "name": "IVF Subsidy Calculator (Taiwan 2.0 & 3.0)",
+  "description": "A professional calculator for estimating IVF subsidies based on Taiwan's 2.0 and 3.0 schemes, featuring history tracking and eligibility logic.",
+  "requestFramePermissions": []
+}
