@@ -31,7 +31,6 @@ const App: React.FC = () => {
 
   const saveHistory = useCallback((res: CalculationResult) => {
     setHistory(prev => {
-      // Keep only unique calculations (by form stringification) to avoid clutter, or just by ID
       const updated = [res, ...prev].slice(0, 10);
       localStorage.setItem('ivf_history', JSON.stringify(updated));
       return updated;
@@ -270,7 +269,7 @@ const App: React.FC = () => {
                         您的申請日期為 <span className="underline decoration-2">{currentResult.formData.firstApplicationDate.replace(/-/g, '/')}</span>。<br/>
                         <span className="inline-block mt-2 px-2 py-0.5 rounded text-[12px]" style={{ backgroundColor: brandColor + '11', color: brandColor }}>
                           {isNewSchemeDate(currentResult.formData.firstApplicationDate) 
-                            ? '申請日期於 2025/11/1 (含) 之後適用新制，若申請日期於 2025/10/31 (含) 以前適用舊制。。' 
+                            ? '申請日期於 2025/11/1 (含) 之後適用新制，若申請日期於 2025/10/31 (含) 以前適用舊制。' 
                             : '申請日期在 2025/10/31 (含) 以前適用舊制，若申請日期於 2025/11/1 (含) 之後適用新制。'}
                         </span>
                       </p>
@@ -345,6 +344,7 @@ const App: React.FC = () => {
                           <span className="text-xl sm:text-2xl mr-1">NT$</span>
                           {(isNewSchemeDate(currentResult.formData.firstApplicationDate) ? currentResult.subsidy3_0 : currentResult.subsidy2_0).toLocaleString()}
                       </p>
+                      <p className="text-xs mt-4 font-bold italic" style={{ color: brandColor + 'AA' }}>※ 實際金額依主管機關核定為準</p>
                   </div>
                 </div>
               ) : (
@@ -355,18 +355,20 @@ const App: React.FC = () => {
             </div>
           </section>
 
-          {/* Calculation History Section */}
-          {history.length > 0 && (
-            <section className="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden">
-              <div className="p-6 sm:p-8">
-                <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-xl font-black text-gray-800 tracking-tight">試算歷史紀錄</h3>
+          {/* Calculation History Section - 始終顯示 */}
+          <section className="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden">
+            <div className="p-6 sm:p-8">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-xl font-black text-gray-800 tracking-tight">試算歷史紀錄</h3>
+                {history.length > 0 && (
                   <button 
                     onClick={clearHistory}
                     className="text-xs font-bold text-gray-400 hover:text-rose-500 transition-colors"
                   >清除紀錄</button>
-                </div>
-                
+                )}
+              </div>
+              
+              {history.length > 0 ? (
                 <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
                   {history.map((item) => {
                     const isNew = isNewSchemeDate(item.formData.firstApplicationDate);
@@ -407,9 +409,14 @@ const App: React.FC = () => {
                     );
                   })}
                 </div>
-              </div>
-            </section>
-          )}
+              ) : (
+                <div className="text-center py-12 bg-slate-50/50 rounded-2xl border-2 border-dashed border-slate-100">
+                  <p className="text-slate-400 text-sm font-bold">尚無試算紀錄</p>
+                  <p className="text-slate-300 text-[10px] mt-1">您的前 10 筆試算將會保存在此處</p>
+                </div>
+              )}
+            </div>
+          </section>
 
           <footer className="mt-20 py-12 text-center bg-white border-t border-gray-100 rounded-3xl">
             <div className="max-w-4xl mx-auto px-4">
